@@ -9,17 +9,32 @@ import './styling/profile.scss'
 const Profile = (props) => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null);
-  const [given_name, setFirstName] = useState(null);
-  const [family_name, setLastName] = useState(null);
+  const [address,setAddress] = useState(null);
+  const [givenName, setFirstName] = useState(null);
+  const [familyName, setLastName] = useState(null);
+  const [name,setName] = useState("");
+  const [phoneNumber,setPhoneNumber] = useState(null);
   const [password, setPassword] = useState(null);
-  const [repeat_password, setRepeat_password] = useState(null);
+  const [repeatPassword, setRepeatPassword] = useState(null);
+  const initializeStates = (user)=>{
+    setEmail(user.email);
+    setFirstName(user.given_name);
+    setLastName(user.family_name);
+    setName(user.given_name + " " + user.family_name);
+    if(user.user_metadata){
+      setAddress(user.user_metadata.address);
+      setPhoneNumber(user.user_metadata.phone_number);
+    }
+    setUser(user);
+  }
   const updateUserHandler = async (e) => {
     const accessToken = await props.getAccessTokenSilently();
     const reqBody = {};
-    if (password && repeat_password === password)
+    if (password && repeatPassword === password)
       reqBody.password = password;
-    reqBody.given_name = given_name;
-    reqBody.family_name = family_name;
+    reqBody.given_name = givenName;
+    reqBody.family_name = familyName;
+    reqBody.user_metadata = {phone_number:phoneNumber,address:address }
     axios.patch(`${link}users/updateUser/${user.user_id}`, reqBody, { headers: { Authorization: `Bearer ${accessToken}` } })
       .then(res => {
         Swal.fire({
@@ -38,12 +53,8 @@ const Profile = (props) => {
       })
   }
   useEffect(() => {
-    if (props.user) {
-      setUser(props.user);
-      setEmail(props.user.email);
-      setFirstName(props.user.given_name);
-      setLastName(props.user.family_name);
-      }
+    if (props.user)
+      initializeStates(props.user);
   }, [props.user]);
   return (
     <div className="profileContainer">
@@ -55,12 +66,7 @@ const Profile = (props) => {
           </div>
           <div className="row">
             <div className="column-full">
-              <Typography className="title"> {user ? user.name : ""} </Typography>
-            </div>
-          </div>
-          <div className="row">
-            <div className="column-full">
-              <Typography className="title"> {user ? user.given_name || user.nickname : ""} </Typography>
+              <Typography className="title"> { name} </Typography>
             </div>
           </div>
         </Paper>
@@ -75,40 +81,47 @@ const Profile = (props) => {
           <div className="row">
             <div className="column-half">
               <Typography className="title"> Mobile </Typography>
-              <Typography className="value"> {user && user.phone_number ? user.phone_number : "-"} </Typography>
+              <Typography className="value"> {phoneNumber||"-"} </Typography>
             </div>
           </div>
         </Paper>
       </div>
       <Paper className="viewEditUserInfoContainer">
-        <div className="largeRow">
-          <Typography className="fieldTitle"> E-Mail </Typography>
-          <TextField className="field"
-            value={user && user.email}
-            disabled
-          />
-        </div>
+        
+        <div className="formContainer">
         <div className="largeRow">
           <Typography className="fieldTitle"> First Name </Typography>
           <TextField className="field"
-            value={user && given_name}
+            value={givenName}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="largeRow">
           <Typography className="fieldTitle"> Last Name </Typography>
           <TextField className="field"
-            value={user && family_name}
+            value={familyName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-
+        <div className="largeRow">
+          <Typography className="fieldTitle">Mobile Number </Typography>
+          <TextField className="field"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </div>
+        <div className="largeRow">
+          <Typography className="fieldTitle">Address </Typography>
+          <TextField className="field"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+        </div>
         <div className="largeRow">
           <Typography className="fieldTitle"> Password</Typography>
           <TextField className="field"
-            value={user && password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
-            error={repeat_password !== password}
             type="password"
 
           />
@@ -117,18 +130,17 @@ const Profile = (props) => {
         <div className="largeRow">
           <Typography className="fieldTitle"> Repeat Password</Typography>
           <TextField className="field"
-            value={user && repeat_password}
-            onChange={(e) => setRepeat_password(e.target.value)}
-            error={repeat_password !== password}
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+            error={((repeatPassword !== password)||(!password)&&(password))}
             type="password"
           />
         </div>
-        <div className="largeRow">
+        </div>
+        <div className="buttonContainer">
         <Button className="button" onClick={updateUserHandler}> Update </Button>
         </div>
-
       </Paper>
-
     </div>
   );
 };

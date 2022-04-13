@@ -59,7 +59,6 @@ exports.updateUser = async(req,res)=>{
             const userData=req.body;
             axios.patch(url,userData,{headers:{Authorization:`Bearer ${token}`}})
             .then(response=>{
-                console.log(response.data);
                 return res.send({data:response.data});
             })
             .catch(err=>{
