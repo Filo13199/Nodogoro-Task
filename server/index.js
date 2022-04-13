@@ -14,25 +14,12 @@ const app= express();
 const fs=require("fs")
 var cookieParser = require('cookie-parser');
 const { auth } = require('express-openid-connect');
+const oAuth = require('./middleware/oAuth');
 //TODO: ORIGIN
 
 
-
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.AUTH0_SECRET,
-  baseURL: 'http://localhost:3000/Home',
-  clientID: process.env.AUTH0_CLIENTID,
-  issuerBaseURL: 'https://dev-sbjztdyr.us.auth0.com'
-};
-app.use(auth(config));
-
+app.use(oAuth)
 // Middleware to make the `user` object available for all views
-app.use(function (req, res, next) {
-  res.locals.user = req.oidc.user;
-  next();
-});
 app.use(cookieParser());
 
 app.use( session({

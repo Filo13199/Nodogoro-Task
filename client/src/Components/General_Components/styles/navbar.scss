@@ -1,4 +1,145 @@
-.navbarContainer{
-    position: static;
+@import "../../../styles/theme.scss";
+.navContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    .announcementBar{
+        height: 25px;
+        display: flex;
+        background-color:rgba($primary-color,0.95);
+        .text{
+            font-size: 1rem;
+            font-weight: 300;
+            width: fit-content;
+            font-family: $primary-font;
+            color:white
+        }
+    }
+    .navbarContainer{
+        max-width: 100%;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        justify-content: space-between;
+        background-color: white;
+        box-shadow: 0 4px 4px -4px rgba(0,0,0,.12);;
+        height: 50px;
+        z-index: 1;
+        .info{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        ul{
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            list-style: none;
+        }
+        li{
+            padding-left: 0.5rem;
+            //font-size: 1.2rem;
+            //font-family: $primary-font;
+            font-weight: 500;
+            //text-transform: uppercase;
+        }
+        .hide{
+            padding-left: 0.1rem;
+            padding-right: 0.1rem;
+            width: 6rem;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 80px;
+            .generalLink{
+                font-size: .9rem;
+                font-weight: 600;
+                text-align: center;
+                text-decoration: none;
+                color: #1d353a;
+            }
+        }
+        .line{
+            height: 0.35rem;
+            background-color: $primary-color;
+            font-family: $primary-font;
+            width: 0%;
+            border-radius: 10px;
+        }
+        .navShopingCart{
+            margin-right: 0.25rem;
+            .navbarIcon{
+                color: $primary-color;
+                font-size: 2rem;
+            }
+        }
+        .navBurgerMenu{
+            color: $primary-color;
+            font-size: 3.5rem;
+        }
+        .navLogin{
+            display: flex;
+            align-items: center;
+            .expandIcon{
+                color:rgba(0,0,0,0.5);
+                cursor: pointer;
+            }
+            .username{
+                color:$primary-color;
+                margin-left: 0.5rem;
+            }
+            .loginButton{
+                color: $primary-color;
+                font-size: 2rem;
+            }
+            .userAvatar{
+                cursor: pointer;
+                border-radius: 10px;  
+            }
+        }
+    }
+}
+.navbarLogoImage{
+    height: 55px;
+    margin-left: 1rem;
+    cursor: pointer;
+    align-self: center;
+}
+
+.sticky{
     top: 0;
+    left: 0;
+    position: sticky;
+    width: 100%;
+    z-index: 100;
+}
+
+@media screen and (max-width: 768px) {
+    .navContainer{
+        .navbarContainer{
+            .navBurgerMenu{
+                font-size: 2.5rem;
+            }
+            .navbarIcon{
+                font-size: 1.5rem;
+            }
+            .hide{display: none;}
+            .navLogin{
+                .profileIcon{padding: 0;}
+            }
+        }
+    }
+    .navbarLogoImage{
+        width: 140px;
+        position: absolute;
+        left: calc(50vw - 70px);
+        margin: 0;
+        top: 15px;
+        z-index: 2;
+    }
 }

@@ -1,0 +1,102 @@
+.profileContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .generalInfoContainer{
+        width: 30%;
+        min-height: 85vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 10px;
+        
+    }
+    .viewEditUserInfoContainer{
+        width: 60%;
+        min-height: 60vh;
+        background-color: white;
+        border-radius: 10px;
+        padding:15px;
+        padding-left: 3%;
+        padding-right: 3%;
+        .largeRow{
+            width: 90%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            .fieldTitle{
+                font-size: 20px;
+                font-weight: bold;
+                width: 20%;
+            }
+            .field{
+                width: 70%;
+            }
+        }
+    }
+
+}
+.profileCard{
+    width: 100%;
+    background-color: white;
+    height: 48%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding-top: 8px;
+    .row{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+        padding-right: 10px;
+        .column-half{
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+            .title{
+                font-size: 20px;
+                font-weight: bold;
+            }
+            .value{
+                font-size: 20px;
+                color: gray
+            }
+        }
+        .column-full{
+            @extend .column-half;
+            width: 100%;
+            justify-content: center;
+            flex-direction: row;
+            .avatar{
+                width: 120px;
+                height: 120px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                background-color: red;
+                color: white;
+                font-weight: bold;
+                font-size: 3rem;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .profileContainer{
+        flex-direction: column;
+        .generalInfoContainer{
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .viewEditUserInfoContainer{
+            width: 100%;
+        }
+    }
+}
