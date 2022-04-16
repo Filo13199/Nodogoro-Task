@@ -9,7 +9,7 @@ ReactDOM.render(
     domain="dev-sbjztdyr.us.auth0.com"
     clientId="QFEIszQqrMlGEI9ZyNkzVvF6BNnmltmz"
     redirectUri={window.location.origin}
-    audience="https://dev-sbjztdyr.us.auth0.com/api/v2/"
+    audience={window.location.origin}
     scope="read:current_user update:current_user_metadata update:users"
   > 
   <BrowserRouter>
