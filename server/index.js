@@ -17,11 +17,6 @@ app.use(session({
   secret: 'secret',
   resave: true,
   saveUninitialized: true,
-  cookie: {
-    path: "/",
-    secure: true,
-    sameSite:false
-}
 }));
 const origin = ['http://localhost:3000', 'http://localhost:5000','https://nodogoro-ecommerce.herokuapp.com']
 if (process.env.NODE_ENV === 'development') {
