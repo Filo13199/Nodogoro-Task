@@ -17,6 +17,10 @@ app.use(session({
   secret: 'secret',
   resave: true,
   saveUninitialized: true,
+  cookie: {
+    path: "/",
+    secure: true,
+}
 }));
 const origin = ['http://localhost:3000', 'http://localhost:5000','https://nodogoro-ecommerce.herokuapp.com']
 if (process.env.NODE_ENV === 'development') {
@@ -64,9 +68,7 @@ app.all('/', function (req, res) {
   res.redirect("/Home");
 });
 if (process.env.NODE_ENV === 'production') {
-  sess.cookie.secure = true;
   app.use(express.static('../client/build'));
-
   // Homepage
   app.get("*", (req, res) => {
     const pathArr = req.path.split("/");
