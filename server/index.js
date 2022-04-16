@@ -60,6 +60,9 @@ mongoose
 //production mode
 
 const indexPath = path.resolve(__dirname, '../client', 'build', 'index.html');
+app.all('/', function (req, res) {
+  res.redirect("/MyOrders");
+});
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('../client/build'));
   // Homepage
