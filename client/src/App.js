@@ -59,10 +59,9 @@ function App() {
   },[width]);
 
   useEffect(() => {
-    if(user&&isAuthenticated){
+    if (isAuthenticated)
       getUserInfo();
-    }
-  }, [getAccessTokenSilently, user?.sub]);
+  }, [getAccessTokenSilently, isAuthenticated]);
   return (
     <div className="App">
               
