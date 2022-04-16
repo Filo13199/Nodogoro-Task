@@ -65,7 +65,7 @@ function App() {
   return (
     <div className="App">
               
-        <Navbar user={userMetadata} handleLogin={()=>await loginWithRedirect()} />
+        <Navbar user={userMetadata} handleLogin={async()=>await loginWithRedirect()} />
         <div className="pageContent">
         <Routes>
       
