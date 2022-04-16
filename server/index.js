@@ -18,7 +18,7 @@ const oAuth = require('./middleware/oAuth');
 //TODO: ORIGIN
 
 
-app.use(oAuth)
+
 // Middleware to make the `user` object available for all views
 app.use(cookieParser());
 app.use(session({
