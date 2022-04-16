@@ -7,18 +7,10 @@ var jsonParser = bodyParser.json({ limit: 1024 * 1024 * 20, type: 'application/j
 var urlencodedParser = bodyParser.urlencoded({ extended: true, limit: 1024 * 1024 * 20, type: 'application/x-www-form-urlencoded' })
 const session = require("express-session");
 const mongoose = require("mongoose");
-var jwt = require('express-jwt');
-var jwks = require('jwks-rsa');
 require('dotenv').config();
 const app = express();
 const fs = require("fs")
 var cookieParser = require('cookie-parser');
-const oAuth = require('./middleware/oAuth');
-
-//TODO: ORIGIN
-
-
-
 // Middleware to make the `user` object available for all views
 app.use(cookieParser());
 app.use(session({
