@@ -5,7 +5,6 @@
     justify-content: space-between;
     .generalInfoContainer{
         width: 30%;
-        min-height: 85vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -39,6 +38,13 @@
                 .field{
                     width: 70%;
                 }
+            }
+        }
+        .buttonContainer{
+            width: 100%;
+            .button{
+                width: 100%;
+                
             }
         }
         

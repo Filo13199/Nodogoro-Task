@@ -149,7 +149,7 @@ const Profile = (props) => {
         </div>
         </div>
         <div className="buttonContainer">
-        <Button className="button" onClick={updateUserHandler}> Update </Button>
+        <Button className="button" onClick={updateUserHandler} variant="outlined"> Update </Button>
         </div>
       </Paper>
     </div>
