@@ -8,7 +8,7 @@ ReactDOM.render(
   <Auth0Provider
     domain="dev-sbjztdyr.us.auth0.com"
     clientId="QFEIszQqrMlGEI9ZyNkzVvF6BNnmltmz"
-    redirectUri={window.location.origin}
+    redirectUri={"https://nodogoro-ecommerce.herokuapp.com/"}
     audience="https://dev-sbjztdyr.us.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata update:users"
   > 
