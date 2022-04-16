@@ -20,6 +20,7 @@ app.use(session({
   cookie: {
     path: "/",
     secure: true,
+    sameSite:"none"
 }
 }));
 const origin = ['http://localhost:3000', 'http://localhost:5000','https://nodogoro-ecommerce.herokuapp.com']
