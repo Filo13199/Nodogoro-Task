@@ -1,12 +1,14 @@
 .App {
+
   .pageContent{
-    min-height: calc(100vh - 85px);
+    min-height: calc(100vh - 130px);
     padding: 20px;
     padding-left: 7%;
     padding-right: 7%;
     display: flex;
     flex-direction: column;
-    background-color: rgb(216, 209, 209);
+    background-color: #001e3c;
+    height: calc(100vh - 120px);
     .whastsappFab{
       position:fixed;
       bottom:70px;
@@ -28,7 +30,9 @@
     }
   }
 }
-
+.MuiStepLabel-iconContainer.MuiStepLabel-alternativeLabel{
+  color:white;
+}
 .App-logo{
   height: 40vmin;
   pointer-events: none;
@@ -61,5 +65,13 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@media screen and (max-width: 768px) {
+  .App{
+      .pageContent{
+        padding-left:3%;
+        padding-right:3%;
+      }
   }
 }

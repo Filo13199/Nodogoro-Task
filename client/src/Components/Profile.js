@@ -16,14 +16,16 @@ const Profile = (props) => {
   const [phoneNumber,setPhoneNumber] = useState(null);
   const [password, setPassword] = useState(null);
   const [repeatPassword, setRepeatPassword] = useState(null);
+  const [isSocial, setIsSocial] = useState(false);
   const initializeStates = (user)=>{
     setEmail(user.email);
-    setFirstName(user.given_name);
-    setLastName(user.family_name);
-    setName(user.given_name + " " + user.family_name);
     if(user.user_metadata){
       setAddress(user.user_metadata.address);
-      setPhoneNumber(user.user_metadata.phone_number);
+      setPhoneNumber(user.user_metadata.mobileNumber);
+      setFirstName((user.user_metadata.given_name||user.given_name));
+      setLastName((user.user_metadata.family_name||user.family_name));
+      setName((user.user_metadata.given_name||user.given_name) +" "+ (user.user_metadata.family_name||user.family_name));
+
     }
     setUser(user);
   }
@@ -32,9 +34,13 @@ const Profile = (props) => {
     const reqBody = {};
     if (password && repeatPassword === password)
       reqBody.password = password;
-    reqBody.given_name = givenName;
-    reqBody.family_name = familyName;
-    reqBody.user_metadata = {phone_number:phoneNumber,address:address }
+    reqBody.user_metadata = {
+        address: address,
+        mobileNumber: phoneNumber,
+        given_name: givenName,
+        family_name: familyName
+      }
+      
     axios.patch(`${link}users/updateUser/${user.user_id}`, reqBody, { headers: { Authorization: `Bearer ${accessToken}` } })
       .then(res => {
         Swal.fire({
@@ -81,7 +87,7 @@ const Profile = (props) => {
           <div className="row">
             <div className="column-half">
               <Typography className="title"> Mobile </Typography>
-              <Typography className="value"> {phoneNumber||"-"} </Typography>
+              <Typography className="value"> {(user&&user.user_metadata&&user.user_metadata.mobileNumber)?user.user_metadata.mobileNumber:"-"} </Typography>
             </div>
           </div>
         </Paper>
@@ -94,6 +100,7 @@ const Profile = (props) => {
           <TextField className="field"
             value={givenName}
             onChange={(e) => setFirstName(e.target.value)}
+            sx={{ input: { color: 'white' } }}
           />
         </div>
         <div className="largeRow">
@@ -101,6 +108,7 @@ const Profile = (props) => {
           <TextField className="field"
             value={familyName}
             onChange={(e) => setLastName(e.target.value)}
+            sx={{ input: { color: 'white' } }}
           />
         </div>
         <div className="largeRow">
@@ -108,6 +116,7 @@ const Profile = (props) => {
           <TextField className="field"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            sx={{ input: { color: 'white' } }}
           />
         </div>
         <div className="largeRow">
@@ -115,6 +124,7 @@ const Profile = (props) => {
           <TextField className="field"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            sx={{ input: { color: 'white' } }}
           />
         </div>
         <div className="largeRow">
@@ -123,7 +133,7 @@ const Profile = (props) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
-
+            sx={{ input: { color: 'white' } }}
           />
         </div>
 
@@ -134,6 +144,7 @@ const Profile = (props) => {
             onChange={(e) => setRepeatPassword(e.target.value)}
             error={((repeatPassword !== password)||(!password)&&(password))}
             type="password"
+            sx={{ input: { color: 'white' } }}
           />
         </div>
         </div>

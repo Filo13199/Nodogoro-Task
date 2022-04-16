@@ -1,13 +1,11 @@
 import React, { useEffect ,useState} from "react";
-import Login from './Components/Auth/Login'
-import Logout from './Components/Auth/Logout'
 import Profile from './Components/Profile'
-import Home from './Components/Home'
 import Navbar from './Components/General_Components/Navbar'
-import {Route,Routes,BrowserRouter,useSearchParams} from "react-router-dom"
+import MyOrders from './Components/MyOrders'
+import {Route,Routes} from "react-router-dom"
+import Checkout from './Components/Checkout'
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios"
-import {link} from "./Helpers/Constants";
 import Swal from 'sweetalert2';
 import './App.scss';
 
@@ -64,7 +62,6 @@ function App() {
     if(user&&isAuthenticated){
       getUserInfo();
     }
-    
   }, [getAccessTokenSilently, user?.sub]);
   return (
     <div className="App">
@@ -75,13 +72,18 @@ function App() {
       
           <Route
               exact
-              path="/Home"
-              element={(props) => <Home {...props} language={"en"}/>}
-          />
-          <Route
-              exact
               path="/Profile"
               element={<Profile isMobile={isMobile} user={userMetadata} getAccessTokenSilently={getAccessTokenSilently} setUserMetadata={setUserMetadata}  language={"en"}/>}
+          />
+          <Route 
+            exact
+            path="/Checkout"
+            element={ <Checkout isMobile={isMobile} user={userMetadata} getAccessTokenSilently={getAccessTokenSilently} setUserMetadata={setUserMetadata} language={"en"}/>}
+          />
+          <Route
+            exact
+            path="/MyOrders"
+            element={<MyOrders user={userMetadata} getAccessTokenSilently={getAccessTokenSilently} language={"en"}/>}
           />
         </Routes>
         </div>

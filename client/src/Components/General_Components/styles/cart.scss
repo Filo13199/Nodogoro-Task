@@ -1,0 +1,191 @@
+@import '../../../styles/theme.scss';
+.myCart{
+    margin-right: small;
+    display:flex;
+    align-self: center;
+    justify-content: space-between;
+    margin-top:0;
+    width:80%;
+    padding: 5px;
+    .myCartContainer{
+        width: 30%;
+        .title{
+            text-align: left;
+            line-height: 34.00px;
+            letter-spacing: 0.00px;
+            color: $primary-color;
+            -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+            font-size: 2rem;
+            font-weight: 700;
+            font-style: normal;
+            font-family: $primary-font;
+            align-self: flex-start;
+            margin-bottom: 0.2rem;
+            }
+            .myCartProductListContainer{
+                    width: 100%;
+                    display:flex;
+                    flex-direction:column;
+                    overflow-y:scroll;
+                    max-height:22.5rem;
+                    overflow-x:clip;
+                    margin-top:0.5rem;
+                    padding: 5px;
+                    .myCartProductContainer{
+                        display: flex;
+                        justify-content: space-between;
+                        margin-top: 5px;
+                        .productImage{
+                            width: 30%;
+                            height: auto;
+                            margin-right: 0.5rem;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                        .myCartProductInfoContainer{
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            margin-right: 10px;
+                            .name{
+                                font-size: 1.2rem;
+                                font-weight: 700;
+                                font-style: normal;
+                                font-family: $primary-font;
+                                line-height: 1.33;
+                                letter-spacing: 0.00px;
+                                color: $primary-color;
+                                -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+                                margin-bottom: 0.2rem;
+                            }
+                            .price{
+                                font-size: 1.1rem;
+                                font-weight: 700;
+                                font-style: normal;
+                                font-family: $primary-font;
+                                line-height: 1.33;
+                                letter-spacing: 0.00px;
+                                color: $primary-color;
+                                -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+                                margin-bottom: 0.2rem;
+                            }
+                        }
+                    }
+                    .myCartProductContainer:hover{
+                        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+                    }
+                    .emptyCart{
+                        width: 150px;
+                    }
+            }
+    }
+    .orderSummaryContainer{
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .orderSummaryAndTitleContainer{
+            .orderSummaryTitle{
+                text-align: left;
+                line-height: 34.00px;
+                letter-spacing: 0.00px;
+                color: $primary-color;
+                -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+                font-size: 2rem;
+                font-weight: 700;
+                font-style: normal;
+                font-family: $primary-font;
+                align-self: flex-start;
+                margin-bottom: 0.2rem;
+            }
+            .orderSummary{
+                display: flex;
+                justify-content: space-between;
+                margin-top: 0.5rem;
+                align-items: center;
+                    .orderSummaryItemTitle{
+                        font-size: 1.4rem;
+                        font-weight: 700;
+                        font-style: normal;
+                        font-family: $primary-font;
+                        line-height: 1.33;
+                        letter-spacing: 0.00px;
+                        color: $primary-color;
+                        -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+                        margin-bottom: 0.2rem;
+                    }
+                    .orderSummaryItemValue{
+                        font-size: 1.1rem;
+                        font-weight: 500;
+                        font-style: normal;
+                        font-family: $primary-font;
+                        line-height: 1.33;
+                        letter-spacing: 0.00px;
+                        color: $primary-color;
+                        -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
+                        margin-bottom: 0.2rem;
+                        text-align: left;
+                        width: 30%;
+                    }
+            }
+            .orderSummaryTotal{
+                display: flex;
+                justify-content: space-between;
+                margin-top: 0.5rem;
+        }
+        }
+        .buttonContainer{
+            align-self: flex-end;
+            width: 100%;
+            .saveChangeButton{
+                width: 100%;
+            }
+        }
+
+}
+
+}
+
+@media screen and (max-width: 768px) {
+    .myCart{
+        align-items: center;
+        margin-bottom: $margin-medium;
+        padding-left: 0;
+        padding-right: 0;
+        flex-direction: column;
+        .myCartContainer{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            .title{
+                align-self: center;
+            }
+            .myCartProductListContainer{
+                align-self: center;
+            }
+        }
+        .orderSummaryContainer{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .orderSummaryTitle{
+                align-self: center;
+            }
+            .orderSummary{
+                width: 100%;
+            }
+        }
+        .myCartProductListContainer{
+            width: 95%;
+            .emptyCart{
+                align-self: center;
+            }
+        }
+        .title{
+            align-self: center;
+        }
+    }
+}

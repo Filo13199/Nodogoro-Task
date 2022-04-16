@@ -5,86 +5,24 @@ const objectId = require('mongoose').Types.ObjectId;
 const Order = require('../models/Order');
 
 
-exports.initiatePaymentShop =async (req,res)=> {
+exports.getPaymentToken =async function(req,res){
     var lang=req.headers.language;
-    const cart=req.body.cart;
-    const promocodeId=req.body.promocodeId;
     const auth_API_Body={"api_key":process.env.API_KEY}
     try{
-        const userId=req.user._id;
-        const user= req.user;
-      if(!user)
-        return res.status(400).send({ error: lang === "ar" ? errors.notLoggedIn.ar : errors.notLoggedIn.en });
-      if(!cart || cart.length==0)
-        return res.status(400).send({ error: lang === "ar" ? errors.emptyCart.ar : errors.emptyCart.en });
-      const productIdsWithDups=[...cart].map(el=>{
-        return mongoose.Types.ObjectId(el.productId);
-      });
-      const productIds=[...new Set(productIdsWithDups)]
-      const products=await Product.find({'_id': { $in:productIds}});
-      const productsIdsOrdered=products.map(el=>el._id.toString());
-      const promocode=await Promocode.findById(promocodeId);
-      var subtotal=0;
-      var discountAmountOnProducts=0;
-      for(var i =0;i<cart.length;i++){
-        const index=productsIdsOrdered.indexOf(cart[i].productId);
-        if(index<0)
-          return res.status(400).send({ error: lang === "ar" ? errors.invalidId.ar : errors.invalidId.en });
-        const product=products[index];
-        if(product.discountPercentage>0 && (new Date(product.discountExpiryDate))>new Date()){
-          subtotal +=(Math.round(product.priceWeight[cart[i].weightIndex].price*((100-product.discountPercentage)/100))*cart[i].quantity);
-        }
-        else  
-          subtotal +=(product.priceWeight[cart[i].weightIndex].price*cart[i].quantity);
-        
-        
-        if(promocode&&promocode.products&&(new Date(promocode.expiryDate))>new Date()){
-          if(promocode.products.indexOf(cart[i].productId)>=0)
-            if(promocode.type=="percentage")
-              discountAmountOnProducts+=product.priceWeight[cart[i].weightIndex].price*cart[i].quantity*promocode.percentage/100;
-            else if (promocode.type=="amount")
-              discountAmountOnProducts+=cart[i].quantity*promocode.amount;
-          }
-      
-        }
-      if(promocodeId&&discountAmountOnProducts==0){
-        if(!promocode)
-          return res.status(400).send({ error: lang === "ar" ? errors.invalidId.ar : errors.invalidId.en });
-        if((new Date(promocode.expiryDate))<new Date())
-          return res.status(400).send({ error: lang === "ar" ? errors.promoCodeExpired.ar : errors.promoCodeExpired.en });
-        if(promocode.minInvoiceTotalPrice&&subtotal<promocode.minInvoiceTotalPrice)
-          return res.status(400).send({ error: lang === "ar" ? errors.promoCodeMinimumInvoice.ar : errors.promoCodeMinimumInvoice.en });
-        if(promocode.type=="percentage" && (!promocode.products||(promocode.products&&promocode.products.length==0))){
-          const priceWithDiscount=subtotal*((100-promocode.percentage)/100);
-          const actualDiscount=subtotal*(promocode.percentage/100);
-          if(promocode.maxDiscountAmount)
-          {
-            if(promocode.maxDiscountAmount>actualDiscount)
-              subtotal=priceWithDiscount;
-            else 
-              subtotal-=promocode.maxDiscountAmount;
-          }
-        }
-        else if (promocode.type=="amount"&&(!promocode.products||(promocode.products&&promocode.products.length==0))){
-          subtotal-=promocode.amount;
-        }
+      const mobileNumber=req.body.phoneNumber;
+      const firstName=req.body.firstName;
+      const lastName=req.body.lastName;
+      const email=req.body.email;
+      const amount=req.body.amount;
+      if(!mobileNumber || !firstName || !lastName || !email)
+        return res.status(400).send({error:"Missing Some Requirements"})
+      const user={
+        mobileNumber:mobileNumber,
+        firstName:firstName,
+        lastName:lastName,
+        email:email
       }
-      else if (discountAmountOnProducts>0){
-        if(promocode.maxDiscountAmount)
-          subtotal-=discountAmountOnProducts>promocode.maxDiscountAmount?promocode.maxDiscountAmount:discountAmountOnProducts;
-        else
-          subtotal-=discountAmountOnProducts;
-      }
-      const mobileNumber=req.body.mobileNumber;
-      const address=req.body.address
-      if(!mobileNumber)
-        return res.status(400).send({error:errors.missingRequirements.en})
-      if(!objectId.isValid(address.city))
-        return res.status(400).send({error:errors.invalidId.en})
-      const city=await City.findById(address.city);
-      if(!city)
-        return res.status(400).send({error:errors.invalidId.en})
-      subtotal+=city.deliveryCharge;
+      var subtotal=1000;
       //rounding because paymob doesn't take more than 3 decimal points
       subtotal=Math.round(subtotal);        
       const amount_cents=subtotal*100;
@@ -122,10 +60,11 @@ exports.initiatePaymentShop =async (req,res)=> {
         "lock_order_when_paid": true
       };
       const payment_Key_Request_Response = await axios.post("https://accept.paymobsolutions.com/api/acceptance/payment_keys",payment_Key_Request_Body, {  });
+      console.log(payment_Key_Request_Response.data);
       return res.send({data:payment_Key_Request_Response.data,IframeId:process.env.IFRAME_ID,orderId:order_Registration_Response.data.id})
     }
     catch(err){
-      console.log(err.toJson);
+      console.log(err.toString());
       return res.status(400).send({ error:"Something Went Wrong" });
     }
 };
@@ -182,30 +121,12 @@ exports.confirmHealthNutritionRequest=async function(req,res){
     }
 };
 
-exports.shopTransactionProcessed =async(req,res)=>{
+
+//WEBHOOKS
+exports.orderTransactionProcessed =async(req,res)=>{
   const lang=req.headers['language'];
   try{
-
-    if(req.body.type=="TOKEN"){
-      //console.log(req.body);
-      const orderRequest=await Order.findOne({orderId:req.body.obj.order_id});
-      const userInQuestion=await User.findById(orderRequest.userId);
-      var userCards=[...userInQuestion.savedCards];
-      if(userCards)
-      {
-        var index=-1;
-        for(var i=0;i<userCards.length;i++){
-          if(userCards[i].masked_pan==req.body.obj.masked_pan){
-            userCards[i].token=req.body.obj.token;
-            index=i;
-          }
-        }
-        if(index===-1)
-          userCards.push({id:req.body.obj.id,token:req.body.obj.token,masked_pan:req.body.obj.masked_pan,card_subtype:req.body.obj.card_subtype,created_at:new Date(req.body.obj.created_at.toString())})
-      }
-      await User.findByIdAndUpdate(orderRequest.userId,{savedCards:userCards});
-   }
-   else{
+    console.log(req.body);
     const orderRequest=await Order.findOne({orderId:req.body.obj.order_id});
     var conc_string="";
       conc_string+= req.body.obj["amount_cents"];
@@ -240,9 +161,8 @@ exports.shopTransactionProcessed =async(req,res)=>{
         await Order.findByIdAndUpdate(orderRequest._id,{status:"card declined",paid:false})
       }
       else if(recieved_HMAC==calc_HMAC_HEX){
-        await Order.findByIdAndUpdate(orderRequest._id,{status:"pending",paid:true});
+        await Order.findByIdAndUpdate(orderRequest._id,{status:"paid"});
       }
-   }
    return res.send({data:"Order Processed"})
 
   }

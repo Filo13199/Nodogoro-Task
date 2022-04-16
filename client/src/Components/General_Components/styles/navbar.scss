@@ -2,31 +2,17 @@
 .navContainer{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     position: relative;
-    .announcementBar{
-        height: 25px;
-        display: flex;
-        background-color:rgba($primary-color,0.95);
-        .text{
-            font-size: 1rem;
-            font-weight: 300;
-            width: fit-content;
-            font-family: $primary-font;
-            color:white
-        }
-    }
     .navbarContainer{
         max-width: 100%;
-        border-radius: 15px;
         display: flex;
         align-items: center;
         padding: 1rem;
-        justify-content: space-between;
-        background-color: white;
+        justify-content: flex-end;
+        background-color: #071b2f;
         box-shadow: 0 4px 4px -4px rgba(0,0,0,.12);;
         height: 50px;
-        z-index: 1;
         .info{
             display: flex;
             align-items: center;
@@ -61,7 +47,7 @@
                 font-weight: 600;
                 text-align: center;
                 text-decoration: none;
-                color: #1d353a;
+                color: white;
             }
         }
         .line{

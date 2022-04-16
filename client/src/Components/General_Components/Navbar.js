@@ -1,13 +1,11 @@
 import React ,{useEffect,useState} from 'react';
-import {Drawer, Avatar, Typography,IconButton,Badge,Menu,MenuItem} from '@mui/material';
+import { Avatar, IconButton,Badge,Menu,MenuItem} from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import { useAuth0 } from "@auth0/auth0-react";
 import {m} from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import SideBar from './SideBar';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import "./styles/navbar.scss"
 
@@ -38,9 +36,6 @@ const Navbar = (props) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-  const toggleDrawer = () => {
-    setMobileAnchorEl(!mobileAnchorEl);
-  };
   let navbarClasses=['navContainer'];
   if(scrolled){
     navbarClasses.push('sticky');
@@ -65,36 +60,16 @@ const Navbar = (props) => {
   return (
     <nav className={navbarClasses.join(" ")} ref={props.navBarRef}>
  <div className="navbarContainer">
- <div className='info'>
-   <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
-       <MenuIcon fontSize="large" className="navBurgerMenu"/>
-   </IconButton>
- <Drawer elevation={5} anchor='left' open={mobileAnchorEl} onClose={toggleDrawer}>
-   <SideBar
-   cart={props.cart}
-   logout={logout}
-   toggleDrawer={toggleDrawer}
-   user={props.user}
-   handleLoginOpen={props.handleLoginOpen}
-   handleLogin={props.handleLogin}
-   />
-   </Drawer>
- </div>
  <ul>
    <li className="hide">
      <div/>
-     <Link to="/Home" className="generalLink" >Home</Link>
-     <m.div key="Home" style={{backgroundColor:'#1D353A'}} className="line" transition={{duration:0.25}} initial={{width:'0%'}} animate={{width:props.pathname==="/clinic"?'100%':'0%'}}/>
-     </li>
-   <li className="hide">
-     <div/>
-     <Link to="/shop" className="generalLink" >Shop</Link>
-     <m.div key="Market Place" style={{backgroundColor:'#97B2A3'}} className="line" transition={{duration:0.25}} initial={{width:'0%'}} />
+     <Link to="/MyOrders" className="generalLink" >My Orders</Link>
+     <m.div key="MyOrders" style={{backgroundColor:'#1D353A'}} className="line" transition={{duration:0.25}} initial={{width:'0%'}} animate={{width:props.pathname==="/clinic"?'100%':'0%'}}/>
      </li>
      <li className="navShopingCart"> 
        {props.user&&
        <IconButton onClick={()=>navigate("/checkout",{replace:true})} color="inherit">
-         <Badge badgeContent={props.cart?props.cart.length:0} color="secondary">
+         <Badge badgeContent={9} color="secondary">
            <ShoppingCartIcon className="navbarIcon"/>
          </Badge>
        </IconButton>

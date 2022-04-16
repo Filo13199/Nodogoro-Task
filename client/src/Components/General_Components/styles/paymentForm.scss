@@ -1,0 +1,13 @@
+.paymentForm{
+    width: 30%;
+    align-self: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+@media screen and (max-width: 768px) {
+    .paymentForm{
+        width: 100%;
+    }    
+}
