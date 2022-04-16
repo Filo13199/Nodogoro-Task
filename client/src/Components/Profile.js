@@ -64,8 +64,8 @@ const Profile = (props) => {
   }, [props.user]);
   return (
     <div className="profileContainer">
-      <div className="generalInfoContainer" style={{backgroundColor:"#071b2f"}}>
-        <Paper className="profileCard" >
+      <div className="generalInfoContainer" >
+        <Paper className="profileCard"style={{backgroundColor:"#071b2f"}} >
           <div className="row">
             <div className="column-full">
             <div className="avatar" style={{backgroundColor:deepOrange[500]}}>N</div>            </div>

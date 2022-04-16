@@ -34,7 +34,8 @@
                     .myCartProductContainer{
                         display: flex;
                         justify-content: space-between;
-                        margin-top: 5px;
+                        margin-top: 10px;
+                        background-color: $secondary-color;
                         .productImage{
                             width: 30%;
                             height: auto;
@@ -56,7 +57,7 @@
                                 font-family: $primary-font;
                                 line-height: 1.33;
                                 letter-spacing: 0.00px;
-                                color: $primary-color;
+                                color: white;
                                 -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
                                 margin-bottom: 0.2rem;
                             }
@@ -67,7 +68,7 @@
                                 font-family: $primary-font;
                                 line-height: 1.33;
                                 letter-spacing: 0.00px;
-                                color: $primary-color;
+                                color: white;
                                 -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
                                 margin-bottom: 0.2rem;
                             }
@@ -91,7 +92,7 @@
                 text-align: left;
                 line-height: 34.00px;
                 letter-spacing: 0.00px;
-                color: $primary-color;
+                color: white;
                 -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
                 font-size: 2rem;
                 font-weight: 700;
@@ -112,7 +113,7 @@
                         font-family: $primary-font;
                         line-height: 1.33;
                         letter-spacing: 0.00px;
-                        color: $primary-color;
+                        color: white;
                         -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
                         margin-bottom: 0.2rem;
                     }
@@ -123,7 +124,7 @@
                         font-family: $primary-font;
                         line-height: 1.33;
                         letter-spacing: 0.00px;
-                        color: $primary-color;
+                        color: white;
                         -webkit-text-stroke: 1px rgba(0, 0, 0, 0);
                         margin-bottom: 0.2rem;
                         text-align: left;

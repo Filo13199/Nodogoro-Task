@@ -54,7 +54,7 @@ export default function UserInfo(props) {
     else {
       reqBody.given_name = givenName;
       reqBody.family_name = familyName;
-      reqBody.user_metadata = { phone_number: mobileNumber, address: address }
+      reqBody.user_metadata = { mobileNumber: mobileNumber, address: address }
     }
     axios.patch(`${link}users/updateUser/${data.user_id}`, reqBody, { headers: { Authorization: `Bearer ${accessToken}` } })
       .then(res => {

@@ -28,10 +28,9 @@ exports.updateUser = async(req,res)=>{
             })
         })
         .catch(err => {
-          console.log(err);
+          console.log(err.toString());
           return res.status(403).json(`Reason: ${err.message}`);
         })
-       
     }
     catch(err){
         console.log(err.message);
