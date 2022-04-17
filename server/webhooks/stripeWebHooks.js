@@ -1,8 +1,8 @@
-const endpointSecret=process.env.WH_SECRET;
+const endpointSecret = process.env.WH_SECRET;
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const Order = require("../models/Order");
-module.exports= async (request,response)=>{
-    let event = request.body;
+module.exports = async (request, response) => {
+  let event = request.body;
   if (endpointSecret) {
     // Get the signature sent by Stripe
     const signature = request.headers['stripe-signature'];
@@ -21,18 +21,17 @@ module.exports= async (request,response)=>{
   // Handle the event
   switch (event.type) {
     case 'payment_intent.succeeded':
-      {let paymentIntent = event.data.object;
-      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-      await Order.findOneAndUpdate({paymentIntentId:paymentIntent.id},{status:"paid"});
-    }
+      {
+        let paymentIntent = event.data.object;
+        await Order.findOneAndUpdate({ paymentIntentId: paymentIntent.id }, { status: "paid" });
+      }
       break;
     case 'payment_intent.payment_failed':
-        {
+      {
         let paymentIntent = event.data.object;
-        console.log(`PaymentIntent for ${paymentIntent.amount} failed!`);
-        await Order.findOneAndUpdate({paymentIntentId:paymentIntent.id},{status:"paymentFailed"});
-        }
-    break;
+        await Order.findOneAndUpdate({ paymentIntentId: paymentIntent.id }, { status: "paymentFailed" });
+      }
+      break;
     default:
       // Unexpected event type
       console.log(`Unhandled event type ${event.type}.`);
