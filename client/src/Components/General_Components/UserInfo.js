@@ -124,7 +124,6 @@ export default function UserInfo(props) {
         <h5 className="userInfoLabel">Mobile Number</h5>
         <TextField
           type="number"
-          error={(mobileNumber && mobileNumber.length !== 13) ? true : false}
           value={mobileNumber} onChange={(evt) => { setMobileNumber(evt.target.value) }}
           variant="outlined"
           className="userInfoText"
