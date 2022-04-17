@@ -9,7 +9,7 @@ export default function OrderPlaced(props) {
                 Order Placed
             </Typography>
             <Typography variant="h6" className="orderPlacedSubTitle">
-                Thank you for your order, click <a href="/myOrders"> here</a> to view your orders.
+                Thank you for your order, click <a href="/MyOrders"> here</a> to view your orders.
             </Typography>
         </div>
   );
